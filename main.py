@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
 
-from populate import create_db
 
 
 app = FastAPI()
