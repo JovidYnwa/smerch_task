@@ -1,6 +1,7 @@
+import random
 from typing import List
 from sqlmodel import Session, delete, select
-from models.models import Category, Tag, Author ,Book
+from models.models import Category, Tag, Author, Book
 from db.db import engine,session
 
 
@@ -20,57 +21,87 @@ CATEGORY: List[str] = [
 
 TAGS: List[str] = [
     "tag1",
-    "tag2"
+    "tag2",
     "tag3",
     "tag4",
     "tag5",
-    "tag6"
+    "tag6",
     "tag7",
     "tag8",
     "tag9",
     "tag10"
 ]
 
-AUTHOR_BOOK: dict = {
-    "Leo Tolstoy": "War and Peas",
-    "Gustave Flaubert": "Madame Bovary",
-    "Mark Twain": "The Andventures of Finn",
-    "George Eliot": "Middlemarch",
-    "Charles Dickens": "Greate Expectations",
-    "Anton Chekhov": "Mother",
-    "William Faulkner": "The Sound",
-    "James Joyce":"The greate",
-    "Jane Austen": "Emma",
-    "Vladimir Nabokov": "Pale Fire",
-}
+AUTHOR: List[str] = [
+    "Leo Tolstoy",
+    "Gustave Flaubert",
+    "Mark Twain",
+    "George Eliot", 
+    "Charles Dickens",
+    "Anton Chekhov",
+    "William Faulkner", 
+    "James Joyce",
+    "Jane Austen", 
+    "Vladimir Nabokov", 
+]
 
-def create_category(j):
-    category_v = Category(name=CATEGORY[j])
-    return category_v
+BOOK: List[str] = [
+        "War and Peas",
+        "Madame Bovary",
+        "The Andventures of Finn",
+        "Middlemarch",
+        "Greate Expectations",
+        "Mother",
+        "The Sound",
+        "The greate",
+        "Emma",
+        "Pale Fire",
+    ]
 
-def create_tag(j):
-    tag_v = Tag(name=TAGS[j])
-    return tag_v
+def create_instance(m, v):
+    instance_v = m(name=v)
+    return instance_v
 
-def create_author(j):
-    author_n = Author(name=j)
-    return author_n
+def create_tag_instance(v, book_v):
+    inctance_ = Tag(v, books=book_v)
 
-def create_book(name_v, category_v, author_v):
-    book = Book(name = name_v, category_id = category_v, author_id = author_v)
+
+def create_book(name_v,author_v, category_v, tag_v: List[int]):
+    book = Book(
+        name = name_v, 
+        author_id = author_v, 
+        category_id = category_v,
+        tags=tag_v
+    )
     return book
 
 
 def create_db():
-    categories = [create_category(x) for x in range(0,10)]
-    authors = [create_author(k) for k in AUTHOR_BOOK.keys()]
-    print("====> ",categories)
+    categories = [create_instance(Category, k) for k in CATEGORY]
+    authors = [create_instance(Author, k) for k in AUTHOR]
+    tags = [create_instance(Tag, k) for k in TAGS]
+    books = [
+        create_book(BOOK[x],
+                    authors[x].id,
+                    categories[x].id,
+                    tag_v=tags[random.randint(1,10)-1:random.randint(1,10)]
+                    )
+            for x in range(0,10)
+            
+    ]
+
+    print(len(categories))
+    print(len(authors))
+    print(len(tags))
+    print(books)
+    print()
+
+
+
     with Session(engine) as session:
-        session.add_all(categories + authors)
+        session.add_all(categories + authors + tags + books)
         session.commit()
-        book = [create_book(AUTHOR_BOOK[authors[x].name],categories[x].id,authors[x].id) for x in range(0,10)]
-        session.add_all(book)
-        session.commit()
+
     
 
 
