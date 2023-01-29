@@ -12,4 +12,3 @@ def select_all_categories(cat_name: Optional[str]=None):
         result = session.exec(statement)
     return result
 
-select_all_categories()

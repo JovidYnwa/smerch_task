@@ -33,6 +33,7 @@ class Tag(SQLModel, table=True):
 
     books: List["Book"] = Relationship(back_populates="tags", link_model=BookTagLink) #Many to many
 
+
 class Book(SQLModel, table=True):
     id: Optional[int] = Field(primary_key=True)
     name: str
@@ -59,6 +60,3 @@ class UserBook(SQLModel, table=True):
     
     book_id: Optional[int] = Field(default=None, foreign_key="book.id")
     userbooks: Optional["Book"] = Relationship(back_populates='book')
-
-    
-

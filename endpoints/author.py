@@ -27,7 +27,7 @@ def authors(author_name: Optional[str]=None):
 
 
 @author_router.get('/author/{id}', response_model=Author, tags=['Author'])
-def category(id: int):
+def author(id: int):
     """Author by given id
     """
     author_found = session.get(Author, id)
@@ -37,18 +37,18 @@ def category(id: int):
 
 
 @author_router.post('/author', tags=['Author'])
-def create_category(category_pr: Author):
+def create_author(author_pr: Author):
     """Author create
     """
 
-    new_author = Author(name=category_pr.name)
+    new_author = Author(name=author_pr.name)
     session.add(new_author)
     session.commit()
     return {"name":new_author.name}
 
 
 @author_router.put('/author/{id}', response_model=Author, tags=['Author'])
-def update_category(id: int, category: Author):
+def update_author(id: int, author: Author):
     """Author update
     """
     author_found = session.get(Author, id)
@@ -56,7 +56,7 @@ def update_category(id: int, category: Author):
     if author_found is None:
         return JSONResponse('object not found',status_code=HTTP_401_UNAUTHORIZED)
 
-    update_item_encoded = jsonable_encoder(category)
+    update_item_encoded = jsonable_encoder(author)
     update_item_encoded.pop('id', None)
     for key, val in update_item_encoded.items():
         author_found.__setattr__(key, val)
