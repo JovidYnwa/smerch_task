@@ -6,9 +6,20 @@ from sqlmodel import SQLModel
 from models.models import *
 from alembic import context
 
+import os, sys
+from dotenv import load_dotenv
+
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))#Custom
+# load_dotenv(os.path.join(BASE_DIR, ".env")) #Custom
+# sys.path.append(BASE_DIR) #Custom
+
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+#config.set_main_option("sqlalchemy.url", os.environ["DATABASE_URL"]) #Custom
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
