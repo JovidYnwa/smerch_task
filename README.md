@@ -19,5 +19,11 @@ Then install the dependencies:
 
 ```sh
 (env)$ pip install -r requirements.txt
+```
 
-Busy with docker(
+Docker-compose on server:
+
+```sh
+docker-compose build
+docker-compose up
+```

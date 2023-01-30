@@ -1,9 +1,9 @@
+import os, sys
 from sqlmodel import create_engine
 from sqlmodel import Session
-eng = 'database.db'
-#uuu = 'postgresql+psycopg2://postgres:password@db:5432/book_db'
-#sqlite_url = f'sqlite:///{eng}'
-uuu = 'postgresql+psycopg2://postgres:password@db:5432/book_db'
-sqlite_url = uuu
-engine = create_engine(sqlite_url, echo=True)
+from dotenv import load_dotenv
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))#Custom
+load_dotenv(os.path.join(BASE_DIR, ".env")) #Custom
+engine = create_engine(os.getenv("DATABASE_URL"), echo=True)#echo=Tru will show all sql queries
 session = Session(bind=engine)
