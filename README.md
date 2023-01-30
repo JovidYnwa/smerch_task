@@ -27,3 +27,11 @@ Docker-compose on server:
 docker-compose build
 docker-compose up
 ```
+
+
+Making Migrations alimbic:
+
+```sh
+docker-compose run app alembic revision --autogenerate -m "init" docker-compose up
+docker-compose run app alembic upgrade head
+```
