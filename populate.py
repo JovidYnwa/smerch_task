@@ -2,8 +2,7 @@ import random
 from typing import List
 from sqlmodel import Session, delete, select
 from models.models import Category, Tag, Author, Book, User, UserBook
-from db.db import engine,session
-
+from db.db import engine, session
 
 
 CATEGORY: List[str] = [
@@ -16,7 +15,7 @@ CATEGORY: List[str] = [
     "Thriller",
     "Memoir",
     "History",
-    "Poetry" 
+    "Poetry",
 ]
 
 TAGS: List[str] = [
@@ -29,34 +28,34 @@ TAGS: List[str] = [
     "tag7",
     "tag8",
     "tag9",
-    "tag10"
+    "tag10",
 ]
 
 AUTHOR: List[str] = [
     "Leo Tolstoy",
     "Gustave Flaubert",
     "Mark Twain",
-    "George Eliot", 
+    "George Eliot",
     "Charles Dickens",
     "Anton Chekhov",
-    "William Faulkner", 
+    "William Faulkner",
     "James Joyce",
-    "Jane Austen", 
-    "Vladimir Nabokov", 
+    "Jane Austen",
+    "Vladimir Nabokov",
 ]
 
 BOOKS: List[str] = [
-        "War and Peas",
-        "Madame Bovary",
-        "The Andventures of Finn",
-        "Middlemarch",
-        "Greate Expectations",
-        "Mother",
-        "The Sound",
-        "The greate",
-        "Emma",
-        "Pale Fire",
-    ]
+    "War and Peas",
+    "Madame Bovary",
+    "The Andventures of Finn",
+    "Middlemarch",
+    "Greate Expectations",
+    "Mother",
+    "The Sound",
+    "The greate",
+    "Emma",
+    "Pale Fire",
+]
 
 USERS: List[str] = [
     "User1",
@@ -77,14 +76,10 @@ def create_instance(m, v):
     return instance_v
 
 
-def create_book(name_v,author_v, category_v, tag_v: List[Tag]):
-    book = Book(
-        name = name_v, 
-        author_id = author_v, 
-        category_id = category_v,
-        tags=tag_v
-    )
+def create_book(name_v, author_v, category_v, tag_v: List[Tag]):
+    book = Book(name=name_v, author_id=author_v, category_id=category_v, tags=tag_v)
     return book
+
 
 def create_user_book(user_v, book_v):
     book = UserBook(
@@ -92,6 +87,7 @@ def create_user_book(user_v, book_v):
         book_id=book_v,
     )
     return book
+
 
 def create_db():
     categories = [create_instance(Category, k) for k in CATEGORY]
@@ -103,19 +99,21 @@ def create_db():
         session.add_all(categories + authors + tags + users)
         session.commit()
         books = [
-            create_book(BOOKS[x],
-                        authors[x].id,
-                        categories[x].id,
-                        tag_v=tags[random.randint(1,10)-1:random.randint(1,10)]
-                        )
-                for x in range(0,10)
-                
+            create_book(
+                BOOKS[x],
+                authors[x].id,
+                categories[x].id,
+                tag_v=tags[random.randint(1, 10) - 1 : random.randint(1, 10)],
+            )
+            for x in range(0, 10)
         ]
         session.add_all(books)
         session.commit()
-        users_books = [create_user_book(k.id, books[random.randint(1,9)].id) for k in users]
+        users_books = [
+            create_user_book(k.id, books[random.randint(1, 9)].id) for k in users
+        ]
         session.add_all(users_books)
         session.commit()
 
- 
+
 create_db()
