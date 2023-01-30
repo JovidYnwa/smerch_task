@@ -32,6 +32,12 @@ docker-compose up
 Making Migrations alimbic:
 
 ```sh
-docker-compose run app alembic revision --autogenerate -m "init" docker-compose up
+docker-compose run app alembic revision --autogenerate -m "init" 
 docker-compose run app alembic upgrade head
+```
+
+Populating DB with data:
+
+```sh
+docker-compose run app python populate.py
 ```
