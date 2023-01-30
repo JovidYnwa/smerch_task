@@ -15,4 +15,4 @@ sqlmodel==0.0.8
 starlette==0.22.0
 typing_extensions==4.4.0
 uvicorn==0.20.0
-#psycopg2
+psycopg2
