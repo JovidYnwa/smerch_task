@@ -4,9 +4,8 @@ from fastapi import APIRouter
 from sqlmodel import select
 from starlette.responses import JSONResponse
 from starlette.status import (
-    HTTP_204_NO_CONTENT,
+    ,
     HTTP_404_NOT_FOUND,
-    HTTP_401_UNAUTHORIZED,
 )
 from fastapi.encoders import jsonable_encoder
 from db.db import session

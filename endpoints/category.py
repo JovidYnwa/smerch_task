@@ -70,6 +70,6 @@ def delete_category(id: int):
     """Category delete by id"""
     category_found = session.get(Category, id)
     if category_found is None:
-        return JSONResponse("Object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("Object not found", status_code=HTTP_404_UNAUTHORIZED)
     session.delete(category_found)
     session.commit()

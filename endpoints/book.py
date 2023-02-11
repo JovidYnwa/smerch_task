@@ -68,7 +68,7 @@ def update_book(id: int, book: Book):
     book_found = session.get(Book, id)
 
     if book_found is None:
-        return JSONResponse("object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("object not found", status_code=HTTP_404_NOT_FOUND)
 
     update_item_encoded = jsonable_encoder(book)
     update_item_encoded.pop("id", None)
@@ -84,6 +84,6 @@ def delete_book(id: int):
 
     book_found = session.get(Book, id)
     if book_found is None:
-        return JSONResponse("Object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("Object not found", status_code=HTTP_404_NOT_FOUND)
     session.delete(book_found)
     session.commit()

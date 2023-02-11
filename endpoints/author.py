@@ -6,7 +6,6 @@ from starlette.responses import JSONResponse
 from starlette.status import (
     HTTP_204_NO_CONTENT,
     HTTP_404_NOT_FOUND,
-    HTTP_401_UNAUTHORIZED,
 )
 from fastapi.encoders import jsonable_encoder
 from db.db import session
@@ -54,7 +53,7 @@ def update_author(id: int, author: Author):
     author_found = session.get(Author, id)
 
     if author_found is None:
-        return JSONResponse("object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("Object not found", status_code=HTTP_404_NOT_FOUND)
 
     update_item_encoded = jsonable_encoder(author)
     update_item_encoded.pop("id", None)
@@ -69,6 +68,6 @@ def delete_author(id: int):
     """Author delete by id"""
     author_found = session.get(Author, id)
     if author_found is None:
-        return JSONResponse("Object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("Object not found", status_code=HTTP_404_NOT_FOUND)
     session.delete(author_found)
     session.commit()

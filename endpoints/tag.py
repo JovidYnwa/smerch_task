@@ -54,7 +54,7 @@ def update_tag(id: int, category: Tag):
     tag_found = session.get(Tag, id)
 
     if tag_found is None:
-        return JSONResponse("object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("Object not found", status_code=HTTP_404_NOT_FOUND)
 
     update_item_encoded = jsonable_encoder(category)
     update_item_encoded.pop("id", None)
@@ -70,6 +70,6 @@ def delete_tag(id: int):
 
     tag_found = session.get(Tag, id)
     if tag_found is None:
-        return JSONResponse("Object not found", status_code=HTTP_401_UNAUTHORIZED)
+        return JSONResponse("Object not found", status_code=HTTP_404_NOT_FOUND)
     session.delete(tag_found)
     session.commit()
