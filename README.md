@@ -1,4 +1,4 @@
-# Task For SmartMerch
+# Project With SqlModel (ORM)
 
 ## Setup
 
